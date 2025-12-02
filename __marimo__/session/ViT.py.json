@@ -5,89 +5,154 @@
   },
   "cells": [
     {
-      "id": "BYtC",
-      "code_hash": "5978c4fb802177fe15e0423d992e4de1",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Haven't yet made predictions on hold-out set but that should be easy.</span></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "Kclp",
-      "code_hash": "5be764df19aca2ae1cf80442f60ca025",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Test time augmentation in cell below means that the model sees many different versions of the image and averages predictions</span></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
       "id": "Hbol",
-      "code_hash": "27dc8cb2eaa14471c219202eea4832d7",
-      "outputs": [],
+      "code_hash": "8d810e825908045d94790ad097d3a75e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "MJUe",
-      "code_hash": "b8ce9a3b89957546bdbc259ba2b4fc36",
-      "outputs": [],
+      "code_hash": "01187b50b2a11cc98a80e316871e7807",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "vblA",
-      "code_hash": "fa978ff4ad6b15d5eebed4d0c3aae456",
-      "outputs": [],
-      "console": []
+      "code_hash": "e44459bb1328bbd083951b0e7a6e5a45",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "['Alex', 'Kelly']\n",
+          "mimetype": "text/plain"
+        }
+      ]
     },
     {
       "id": "bkHC",
-      "code_hash": "659ee0b13360b4ae131014efa11ad546",
-      "outputs": [],
+      "code_hash": "99bbf7d6074635ff4b3867e895d9182a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "lEQa",
-      "code_hash": "15fb31a1b515b3fdbbd63e42bc629fe9",
-      "outputs": [],
-      "console": []
+      "code_hash": "26942dd17c0367e69c626dcb3d5c8a2d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "Some weights of SwinForImageClassification were not initialized from the model checkpoint at microsoft/swin-base-patch4-window7-224 and are newly initialized because the shapes did not match:\n- classifier.bias: found shape torch.Size([1000]) in the checkpoint and torch.Size([2]) in the model instantiated\n- classifier.weight: found shape torch.Size([1000, 1024]) in the checkpoint and torch.Size([2, 1024]) in the model instantiated\nYou should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.\n",
+          "mimetype": "text/plain"
+        }
+      ]
     },
     {
       "id": "PKri",
-      "code_hash": "12059fa3c1bf64d0ecc7a7bacc3d66aa",
-      "outputs": [],
+      "code_hash": "2c6b21c2491c2fb27d44793c2f55a01a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "Xref",
       "code_hash": "a673cfdf87b26c182c75e6ccba061053",
-      "outputs": [],
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>TrainOutput(global_step=343, training_loss=0.08025811908022655, metrics={&#x27;train_runtime&#x27;: 354.6938, &#x27;train_samples_per_second&#x27;: 109.39, &#x27;train_steps_per_second&#x27;: 13.815, &#x27;total_flos&#x27;: 2.127865290857349e+17, &#x27;train_loss&#x27;: 0.08025811908022655, &#x27;epoch&#x27;: 7.0})</pre>"
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "SFPL",
-      "code_hash": "8f66570a4750b70a70e71dd8a0527134",
-      "outputs": [],
+      "code_hash": "12f192c1e1e0d4a49d4d7fe0c3175a15",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[\"weights/microsoft_swin-base-patch4-window7-224\\\\preprocessor_config.json\"]"
+          }
+        }
+      ],
       "console": []
     },
     {
-      "id": "RGSE",
-      "code_hash": "0b37b15dac67bdcb55706ab037ab5a1d",
-      "outputs": [],
-      "console": []
+      "id": "BYtC",
+      "code_hash": "7862deed2163aba36cabd351d659a71c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Wrote 20 rows to predictions/microsoft_swin-base-patch4-window7-224/holdout_predictions.csv\n",
+          "mimetype": "text/plain"
+        }
+      ]
     },
     {
-      "id": "emfo",
-      "code_hash": "51247ec7a27404bf89c0a88774e97475",
-      "outputs": [],
+      "id": "__scratch__",
+      "code_hash": null,
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     }
   ]
