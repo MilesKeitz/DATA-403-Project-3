@@ -103,7 +103,7 @@
         {
           "type": "data",
           "data": {
-            "text/html": "<pre class='text-xs'>TrainOutput(global_step=343, training_loss=0.08025811908022655, metrics={&#x27;train_runtime&#x27;: 354.6938, &#x27;train_samples_per_second&#x27;: 109.39, &#x27;train_steps_per_second&#x27;: 13.815, &#x27;total_flos&#x27;: 2.127865290857349e+17, &#x27;train_loss&#x27;: 0.08025811908022655, &#x27;epoch&#x27;: 7.0})</pre>"
+            "text/html": "<pre class='text-xs'>TrainOutput(global_step=294, training_loss=0.0906912092955745, metrics={&#x27;train_runtime&#x27;: 226.3934, &#x27;train_samples_per_second&#x27;: 171.383, &#x27;train_steps_per_second&#x27;: 21.644, &#x27;total_flos&#x27;: 1.823884535020585e+17, &#x27;train_loss&#x27;: 0.0906912092955745, &#x27;epoch&#x27;: 6.0})</pre>"
           }
         }
       ],
@@ -111,7 +111,7 @@
     },
     {
       "id": "SFPL",
-      "code_hash": "12f192c1e1e0d4a49d4d7fe0c3175a15",
+      "code_hash": "b2510a9f24a283f8232b4c4575e99f9e",
       "outputs": [
         {
           "type": "data",
@@ -141,19 +141,6 @@
           "mimetype": "text/plain"
         }
       ]
-    },
-    {
-      "id": "__scratch__",
-      "code_hash": null,
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
     }
   ]
 }

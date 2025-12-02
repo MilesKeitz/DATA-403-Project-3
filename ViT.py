@@ -261,6 +261,7 @@ def _(json, os, processor, save_point, trainer, val_ds):
     with open(os.path.join(save_point, "metrics.json"), "w") as fi:
         json.dump(mets, fi, indent=2)
 
+    trainer.args.save_safetensors = False
     # 6) Save for inferencee
     trainer.save_model(
         save_point
