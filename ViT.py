@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.18.2"
+__generated_with = "0.18.0"
 app = marimo.App(width="medium", auto_download=["html"])
 
 
@@ -67,30 +67,42 @@ def _(torch):
 
 @app.cell
 def _(load_dataset):
-    # 1) Load folder dataset and make a stratified train/val split
-    raw = load_dataset(
+    # 1) Load TRAIN from Alex/Kelly
+    train_raw = load_dataset(
         "imagefolder",
         data_files={"train": ["Data/Alex/**", "Data/Kelly/**"]},
         split="train",
     )
-    # Label names come from subfolder names (e.g., ['Alex', 'Kelly'] in sorted order)
-    label_names = raw.features["label"].names
-    print(label_names)
-    num_labels = len(label_names)
-    assert num_labels == 2, (
-        f"Expected 2 classes, found {num_labels}: {label_names}"
+
+    # 2) Load VAL from Namedholdoutset01/alex,kelly
+    val_raw = load_dataset(
+        "imagefolder",
+        data_files={"train": [
+            "Data/Namedholdoutset01/Alex/**",
+            "Data/Namedholdoutset01/Kelly/**",
+        ]},
+        split="train",
     )
 
-    split = raw.train_test_split(test_size=0.2, stratify_by_column="label", seed=0)
-    return label_names, num_labels, split
+    # Use the TRAIN split to define labels
+    label_names = train_raw.features["label"].names
+    print(label_names)
+    num_labels = len(label_names)
+    assert num_labels == 2, f"Expected 2 classes, found {num_labels}: {label_names}"
+
+    # Optional sanity check (will fail if you messed up folder names / casing)
+    assert val_raw.features["label"].names == label_names, (
+        f"Train/val label sets differ: {train_raw.features['label'].names} "
+        f"vs {val_raw.features['label'].names}"
+    )
+    return label_names, num_labels, train_raw, val_raw
 
 
 @app.cell
-def _(AutoImageProcessor, T, split):
-    train_ds, val_ds = split["train"], split["test"]
+def _(AutoImageProcessor, T, train_raw, val_raw):
     # 2) Image processor + transforms aligned with ViT pretraining
-    # checkpoint = "google/vit-base-patch16-224-in21k" # not working--cached issue?
-    checkpoint = "microsoft/swin-base-patch4-window7-224"
+    checkpoint = "google/vit-base-patch16-224"
+    # checkpoint = "microsoft/swin-base-patch4-window7-224"
     # checkpoint = "facebook/deit-base-distilled-patch16-224" # needs TF
     # checkpoint = "microsoft/beit-base-patch16-224-pt22k" # needs Jax
     # checkpoint = "facebook/dinov2-small"
@@ -102,7 +114,7 @@ def _(AutoImageProcessor, T, split):
     train_tfms = T.Compose(
         [
             T.RandomResizedCrop(size, scale=(0.8, 1.0)),
-            T.RandomHorizontalFlip(),
+            # T.RandomHorizontalFlip(),
             T.ToTensor(),
             normalize,
         ]
@@ -133,9 +145,8 @@ def _(AutoImageProcessor, T, split):
             "labels": batch["label"],
         }
 
-
-    train_ds = train_ds.with_transform(_transform_train)
-    val_ds = val_ds.with_transform(_transform_val)
+    train_ds = train_raw.with_transform(_transform_train)
+    val_ds = val_raw.with_transform(_transform_val)
     return checkpoint, processor, train_ds, val_ds, val_tfms
 
 
@@ -162,7 +173,7 @@ def _(
     clean_checkpoint = checkpoint.replace("/", "_")
     save_point = "weights/" + clean_checkpoint
     os.makedirs(save_point, exist_ok=True) 
-    # Freeze the backbone (Swin’s module is `model.swin`, not `model.vit`)
+    # Freeze the backbone
     # backbone = None
     # for attr in ("swin", "vit", "convnext"):
     #     if hasattr(model, attr):
@@ -240,7 +251,7 @@ def _(
         compute_metrics=compute_metrics,
         callbacks=[
             EarlyStoppingCallback(
-                early_stopping_patience=4,  # stop if no improvement for 4 evals
+                early_stopping_patience=5,  # stop if no improvement for 4 evals
                 early_stopping_threshold=0.0,  # require strictly better (set >0 to require margin)
             )
         ],
@@ -255,14 +266,19 @@ def _(trainer):
 
 
 @app.cell
-def _(clean_checkpoint, json, os, processor, save_point, trainer, val_ds):
+def _(trainer, val_ds):
     mets = trainer.evaluate(eval_dataset=val_ds)
+    print(mets)
+    return (mets,)
 
+
+@app.cell
+def _(clean_checkpoint, json, mets, os, processor, save_point, trainer):
     os.makedirs(f"predictions/{clean_checkpoint}/", exist_ok=True)
     with open(f"predictions/{clean_checkpoint}/metrics.json", "w") as fi:
         json.dump(mets, fi, indent=2)
 
-    trainer.args.save_safetensors = False
+    trainer.args.save_safetensors = True
     # 6) Save for inferencee
     trainer.save_model(
         save_point
@@ -278,6 +294,7 @@ def _(
     clean_checkpoint,
     csv,
     load_dataset,
+    np,
     os,
     save_point,
     trainer,
@@ -299,16 +316,52 @@ def _(
     )
 
     logits = trainer.predict(hold).predictions
+    max_logits = logits.max(axis=-1, keepdims=True)
+    exp_logits = np.exp(logits - max_logits)
+    probs = exp_logits / exp_logits.sum(axis=-1, keepdims=True)
+
     pred_ids = logits.argmax(-1)
+
+    pred_probs = probs[np.arange(pred_ids.shape[0]), pred_ids]
 
     id2label_holdout = getattr(model_eval.config, "id2label", {})
 
     out_path = f"predictions/{clean_checkpoint}/holdout_predictions.csv"
     with open(out_path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(["filename", "prediction"])
-        for k, y in zip(filenames, pred_ids.tolist()):
-            w.writerow([k, id2label_holdout.get(int(y), str(int(y)))])
+        w.writerow(["filename", "prediction", "prediction_prob"])
+        for k, y, p in zip(filenames, pred_ids.tolist(), pred_probs.tolist()):
+            w.writerow([k, id2label_holdout.get(int(y), str(int(y))), float(p)])
+
+    print(f"Wrote {len(filenames)} rows to {out_path}")
+
+    hold = load_dataset("imagefolder", data_dir="Data/HoldoutSet02", split="train")
+
+    filenames = [os.path.basename(im.filename) for im in hold["image"]]
+
+    hold = hold.with_transform(
+        lambda b: {
+            "pixel_values": [val_tfms(im.convert("RGB")) for im in b["image"]]
+        }
+    )
+
+    logits = trainer.predict(hold).predictions
+    max_logits = logits.max(axis=-1, keepdims=True)
+    exp_logits = np.exp(logits - max_logits)
+    probs = exp_logits / exp_logits.sum(axis=-1, keepdims=True)
+
+    pred_ids = logits.argmax(-1)
+
+    pred_probs = probs[np.arange(pred_ids.shape[0]), pred_ids]
+
+    id2label_holdout = getattr(model_eval.config, "id2label", {})
+
+    out_path = f"predictions/{clean_checkpoint}/holdout2_predictions.csv"
+    with open(out_path, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["filename", "prediction", "prediction_prob"])
+        for k, y, p in zip(filenames, pred_ids.tolist(), pred_probs.tolist()):
+            w.writerow([k, id2label_holdout.get(int(y), str(int(y))), float(p)])
 
     print(f"Wrote {len(filenames)} rows to {out_path}")
     return

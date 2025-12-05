@@ -32,7 +32,7 @@
     },
     {
       "id": "vblA",
-      "code_hash": "e44459bb1328bbd083951b0e7a6e5a45",
+      "code_hash": "3fb2aa793a5cbb83151c76ded7006674",
       "outputs": [
         {
           "type": "data",
@@ -52,7 +52,7 @@
     },
     {
       "id": "bkHC",
-      "code_hash": "99bbf7d6074635ff4b3867e895d9182a",
+      "code_hash": "af7e98f071d5373f4907903ca2965348",
       "outputs": [
         {
           "type": "data",
@@ -65,7 +65,7 @@
     },
     {
       "id": "lEQa",
-      "code_hash": "26942dd17c0367e69c626dcb3d5c8a2d",
+      "code_hash": "25aeffa0f9fbbcf9596f571f3fd11023",
       "outputs": [
         {
           "type": "data",
@@ -78,14 +78,14 @@
         {
           "type": "stream",
           "name": "stderr",
-          "text": "Some weights of SwinForImageClassification were not initialized from the model checkpoint at microsoft/swin-base-patch4-window7-224 and are newly initialized because the shapes did not match:\n- classifier.bias: found shape torch.Size([1000]) in the checkpoint and torch.Size([2]) in the model instantiated\n- classifier.weight: found shape torch.Size([1000, 1024]) in the checkpoint and torch.Size([2, 1024]) in the model instantiated\nYou should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.\n",
+          "text": "Some weights of ViTForImageClassification were not initialized from the model checkpoint at google/vit-base-patch16-224 and are newly initialized because the shapes did not match:\n- classifier.bias: found shape torch.Size([1000]) in the checkpoint and torch.Size([2]) in the model instantiated\n- classifier.weight: found shape torch.Size([1000, 768]) in the checkpoint and torch.Size([2, 768]) in the model instantiated\nYou should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.\n",
           "mimetype": "text/plain"
         }
       ]
     },
     {
       "id": "PKri",
-      "code_hash": "2c6b21c2491c2fb27d44793c2f55a01a",
+      "code_hash": "c68467ff8818f089f3e95a0eb96be35c",
       "outputs": [
         {
           "type": "data",
@@ -103,7 +103,7 @@
         {
           "type": "data",
           "data": {
-            "text/html": "<pre class='text-xs'>TrainOutput(global_step=294, training_loss=0.0906912092955745, metrics={&#x27;train_runtime&#x27;: 226.3934, &#x27;train_samples_per_second&#x27;: 171.383, &#x27;train_steps_per_second&#x27;: 21.644, &#x27;total_flos&#x27;: 1.823884535020585e+17, &#x27;train_loss&#x27;: 0.0906912092955745, &#x27;epoch&#x27;: 6.0})</pre>"
+            "text/html": "<pre class='text-xs'>TrainOutput(global_step=488, training_loss=0.053572508706863906, metrics={&#x27;train_runtime&#x27;: 243.5682, &#x27;train_samples_per_second&#x27;: 199.123, &#x27;train_steps_per_second&#x27;: 25.044, &#x27;total_flos&#x27;: 3.0066891970461696e+17, &#x27;train_loss&#x27;: 0.053572508706863906, &#x27;epoch&#x27;: 8.0})</pre>"
           }
         }
       ],
@@ -111,20 +111,40 @@
     },
     {
       "id": "SFPL",
-      "code_hash": "b2510a9f24a283f8232b4c4575e99f9e",
+      "code_hash": "ef26348af36e8040f03edb2c3b07bf46",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "application/json": "[\"weights/microsoft_swin-base-patch4-window7-224\\\\preprocessor_config.json\"]"
+            "text/html": "\n    <div>\n      \n      <progress value='3' max='3' style='width:300px; height:20px; vertical-align: middle;'></progress>\n      [3/3 00:00]\n    </div>\n    "
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "{'eval_loss': 0.7855520248413086, 'eval_accuracy': 0.85, 'eval_f1_macro': 0.849624060150376, 'eval_runtime': 0.4195, 'eval_samples_per_second': 47.677, 'eval_steps_per_second': 7.152, 'epoch': 8.0}\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "4f2906a21fa01721cda46f3552a568a2",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[\"weights/google_vit-base-patch16-224\\\\preprocessor_config.json\"]"
           }
         }
       ],
       "console": []
     },
     {
-      "id": "BYtC",
-      "code_hash": "7862deed2163aba36cabd351d659a71c",
+      "id": "RGSE",
+      "code_hash": "ab654082c25cc18cd9b589d70eca8720",
       "outputs": [
         {
           "type": "data",
@@ -137,7 +157,19 @@
         {
           "type": "stream",
           "name": "stdout",
-          "text": "Wrote 20 rows to predictions/microsoft_swin-base-patch4-window7-224/holdout_predictions.csv\n",
+          "text": "Wrote 20 rows to predictions/google_vit-base-patch16-224/holdout_predictions.csv\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "\n\rDownloading data:   0%|          | 0/46 [00:00<?, ?files/s]\u001b[A\rDownloading data: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 46/46 [00:00<00:00, 206793.12files/s]\n\rGenerating train split: 0 examples [00:00, ? examples/s]\rGenerating train split: 46 examples [00:00, 4135.69 examples/s]\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Wrote 46 rows to predictions/google_vit-base-patch16-224/holdout2_predictions.csv\n",
           "mimetype": "text/plain"
         }
       ]
