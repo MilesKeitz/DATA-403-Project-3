@@ -259,8 +259,7 @@ def _(clean_checkpoint, json, os, processor, save_point, trainer, val_ds):
     mets = trainer.evaluate(eval_dataset=val_ds)
 
     os.makedirs(f"predictions/{clean_checkpoint}/", exist_ok=True)
-    out_path = f"predictions/{clean_checkpoint}/holdout_predictions.csv"
-    with open(os.path.join(out_path, "metrics.json"), "w") as fi:
+    with open(f"predictions/{clean_checkpoint}/metrics.json", "w") as fi:
         json.dump(mets, fi, indent=2)
 
     trainer.args.save_safetensors = False
@@ -269,17 +268,17 @@ def _(clean_checkpoint, json, os, processor, save_point, trainer, val_ds):
         save_point
     )  # saves model + config (incl. id2label/label2id)
     processor.save_pretrained(save_point)
-    return (out_path,)
+    return
 
 
 @app.cell
 def _(
     AutoImageProcessor,
     AutoModelForImageClassification,
+    clean_checkpoint,
     csv,
     load_dataset,
     os,
-    out_path,
     save_point,
     trainer,
     val_tfms,
@@ -304,6 +303,7 @@ def _(
 
     id2label_holdout = getattr(model_eval.config, "id2label", {})
 
+    out_path = f"predictions/{clean_checkpoint}/holdout_predictions.csv"
     with open(out_path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["filename", "prediction"])
