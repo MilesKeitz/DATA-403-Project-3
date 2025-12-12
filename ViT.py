@@ -101,8 +101,8 @@ def _(load_dataset):
 @app.cell
 def _(AutoImageProcessor, T, train_raw, val_raw):
     # 2) Image processor + transforms aligned with ViT pretraining
-    checkpoint = "google/vit-base-patch16-224"
-    # checkpoint = "microsoft/swin-base-patch4-window7-224"
+    # checkpoint = "google/vit-base-patch16-224"
+    checkpoint = "microsoft/swin-base-patch4-window7-224"
     # checkpoint = "facebook/deit-base-distilled-patch16-224" # needs TF
     # checkpoint = "microsoft/beit-base-patch16-224-pt22k" # needs Jax
     # checkpoint = "facebook/dinov2-small"

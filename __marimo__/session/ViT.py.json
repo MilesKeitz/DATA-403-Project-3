@@ -52,7 +52,7 @@
     },
     {
       "id": "bkHC",
-      "code_hash": "af7e98f071d5373f4907903ca2965348",
+      "code_hash": "6f7ef5dc5cc36673c0ef43617f2a4f38",
       "outputs": [
         {
           "type": "data",
@@ -78,7 +78,7 @@
         {
           "type": "stream",
           "name": "stderr",
-          "text": "Some weights of ViTForImageClassification were not initialized from the model checkpoint at google/vit-base-patch16-224 and are newly initialized because the shapes did not match:\n- classifier.bias: found shape torch.Size([1000]) in the checkpoint and torch.Size([2]) in the model instantiated\n- classifier.weight: found shape torch.Size([1000, 768]) in the checkpoint and torch.Size([2, 768]) in the model instantiated\nYou should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.\n",
+          "text": "Some weights of SwinForImageClassification were not initialized from the model checkpoint at microsoft/swin-base-patch4-window7-224 and are newly initialized because the shapes did not match:\n- classifier.bias: found shape torch.Size([1000]) in the checkpoint and torch.Size([2]) in the model instantiated\n- classifier.weight: found shape torch.Size([1000, 1024]) in the checkpoint and torch.Size([2, 1024]) in the model instantiated\nYou should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.\n",
           "mimetype": "text/plain"
         }
       ]
@@ -103,7 +103,7 @@
         {
           "type": "data",
           "data": {
-            "text/html": "<pre class='text-xs'>TrainOutput(global_step=488, training_loss=0.053572508706863906, metrics={&#x27;train_runtime&#x27;: 243.5682, &#x27;train_samples_per_second&#x27;: 199.123, &#x27;train_steps_per_second&#x27;: 25.044, &#x27;total_flos&#x27;: 3.0066891970461696e+17, &#x27;train_loss&#x27;: 0.053572508706863906, &#x27;epoch&#x27;: 8.0})</pre>"
+            "text/html": "\n    <div>\n      \n      <progress value='548' max='6100' style='width:300px; height:20px; vertical-align: middle;'></progress>\n      [ 548/6100 12:06 < 2:03:03, 0.75 it/s, Epoch 8.97/100]\n    </div>\n    <table border=\"1\" class=\"dataframe\">\n  <thead>\n <tr style=\"text-align: left;\">\n      <th>Epoch</th>\n      <th>Training Loss</th>\n      <th>Validation Loss</th>\n      <th>Accuracy</th>\n      <th>F1 Macro</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>1</td>\n      <td>0.308100</td>\n      <td>1.625592</td>\n      <td>0.700000</td>\n      <td>0.687500</td>\n    </tr>\n    <tr>\n      <td>2</td>\n      <td>0.102900</td>\n      <td>1.840943</td>\n      <td>0.700000</td>\n      <td>0.696970</td>\n    </tr>\n    <tr>\n      <td>3</td>\n      <td>0.017500</td>\n      <td>2.260551</td>\n      <td>0.700000</td>\n      <td>0.696970</td>\n    </tr>\n    <tr>\n      <td>4</td>\n      <td>0.001500</td>\n      <td>2.491147</td>\n      <td>0.700000</td>\n      <td>0.696970</td>\n    </tr>\n    <tr>\n      <td>5</td>\n      <td>0.051700</td>\n      <td>2.492753</td>\n      <td>0.700000</td>\n      <td>0.696970</td>\n    </tr>\n    <tr>\n      <td>6</td>\n      <td>0.025900</td>\n      <td>2.206351</td>\n      <td>0.750000</td>\n      <td>0.749373</td>\n    </tr>\n    <tr>\n      <td>7</td>\n      <td>0.000000</td>\n      <td>2.222050</td>\n      <td>0.750000</td>\n      <td>0.749373</td>\n    </tr>\n    <tr>\n      <td>8</td>\n      <td>0.000000</td>\n      <td>2.323741</td>\n      <td>0.700000</td>\n      <td>0.696970</td>\n    </tr>\n  </tbody>\n</table><p>"
           }
         }
       ],
@@ -114,10 +114,10 @@
       "code_hash": "ef26348af36e8040f03edb2c3b07bf46",
       "outputs": [
         {
-          "type": "data",
-          "data": {
-            "text/html": "\n    <div>\n      \n      <progress value='3' max='3' style='width:300px; height:20px; vertical-align: middle;'></progress>\n      [3/3 00:00]\n    </div>\n    "
-          }
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (RuntimeError): ",
+          "traceback": []
         }
       ],
       "console": [
@@ -134,10 +134,10 @@
       "code_hash": "4f2906a21fa01721cda46f3552a568a2",
       "outputs": [
         {
-          "type": "data",
-          "data": {
-            "application/json": "[\"weights/google_vit-base-patch16-224\\\\preprocessor_config.json\"]"
-          }
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (RuntimeError): ",
+          "traceback": []
         }
       ],
       "console": []
@@ -147,10 +147,10 @@
       "code_hash": "ab654082c25cc18cd9b589d70eca8720",
       "outputs": [
         {
-          "type": "data",
-          "data": {
-            "text/html": ""
-          }
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (RuntimeError): ",
+          "traceback": []
         }
       ],
       "console": [
